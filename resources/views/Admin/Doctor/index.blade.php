@@ -44,13 +44,13 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">View Patient Details</h5>
-                <a href="/admin/patient/create">
+                <h5 class="card-title">View Doctors Details</h5>
+                <a href="/admin/doctor/create">
                     <button type="button" class="btn btn-primary" style="float: right;margin-bottom: 10px;">
                     <span>
                         <i class="fa fa-plus"></i>
                     </span>
-                        Add Patient
+                        Add Doctor
                     </button>
                 </a>
                 <div class="table-responsive">
@@ -67,12 +67,12 @@
                         </thead>
                         <tbody>
 
-                        @foreach($users as $user)
+{{--                        @foreach($users as $user)--}}
                             <tr>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->email_verified_at}}</td>
-                                <td>{{$user->created_at}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
 
                                 </td>
@@ -82,7 +82,7 @@
                                     <a href=""><i class="fa fa-trash"></i> </a>
                                 </td>
                             </tr>
-                        @endforeach
+{{--                        @endforeach--}}
                         </tbody>
                         <tfoot>
                         <tr>
