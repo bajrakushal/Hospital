@@ -13,7 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+//        'App\Models\Admin' => 'App\Policies\AdminPolicy',
+//        'App\Models\Doctor' => 'App\Policies\DoctorPolicy',
     ];
 
     /**
@@ -24,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+//        Gate::define('view-dashboards','App\Policies\AdminPolicy@view');
+//        Gate::define('create-doctors','App\Policies\DoctorPolicy@create');
 
         //
     }

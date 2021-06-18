@@ -33,7 +33,7 @@
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
                     </ol>
                 </nav>
             </div>
@@ -45,14 +45,11 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">View Patient Details</h5>
-                <a href="/admin/patient/create">
-                    <button type="button" class="btn btn-primary" style="float: right;margin-bottom: 10px;">
-                    <span>
-                        <i class="fa fa-plus"></i>
-                    </span>
-                        Add Patient
-                    </button>
-                </a>
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table id="data-table" class="table table-striped table-bordered">
                         <thead>
@@ -62,7 +59,10 @@
                             <th>Email verified at</th>
                             <th>Registration date</th>
                             <th>Deactivate Patient</th>
-                            <th>Actions</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -74,12 +74,33 @@
                                 <td>{{$user->email_verified_at}}</td>
                                 <td>{{$user->created_at}}</td>
                                 <td>
-
+                                    @if($user->status == '0')
+                                        <button type="button" class="btn btn-purple">Not Banned</button>
+                                    @elseif($user->status == '1')
+                                        <button type="button" class="btn btn-danger">Banned</button>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href=""><i class="fa fa-eye"></i> </a>
-                                    <a href=""><i class="fa fa-edit"></i> </a>
-                                    <a href=""><i class="fa fa-trash"></i> </a>
+                                    <a href="/admin/patient/{{$user->id}}"><button class="btn btn-outline-primary" type="button"><i class="fa fa-eye"></i> View
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/admin/patient/{{$user->id}}/edit"><button class="btn btn-secondary" type="button"><i class="fa fa-edit"></i> Edit
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger" data-id="{{ $user->id }}" type="button" onclick="event.preventDefault();
+                                        document.getElementById('delete-form-{{ $user->id }}').submit();">
+                                        <i class="fa fa-trash">
+                                            Delete
+                                        </i>
+                                    </button>
+                                    <form id="delete-form1-{{ $user->id }}" id="{{ $user->id }}" action="/admin/dashboard/{{ $user->id }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -91,7 +112,9 @@
                             <th>Email verified at</th>
                             <th>Registration date</th>
                             <th>Deactivate Patient</th>
-                            <th>Actions</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         </tfoot>
                     </table>

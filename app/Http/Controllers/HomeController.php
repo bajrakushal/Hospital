@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
+use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $appointment = Appointment::where('user_id',auth()->user()->id)->first();
+        $appointments = Appointment::where('user_id',auth()->user()->id)->get();
+        return view('home',compact('appointment','appointments'));
     }
+
 }

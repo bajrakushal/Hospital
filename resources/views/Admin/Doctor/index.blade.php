@@ -29,11 +29,11 @@
 @section('breadcrumb')
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">View Patients</h4>
+            <h4 class="page-title">View Doctors</h4>
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
                     </ol>
                 </nav>
             </div>
@@ -45,6 +45,11 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">View Doctors Details</h5>
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <a href="/admin/doctor/create">
                     <button type="button" class="btn btn-primary" style="float: right;margin-bottom: 10px;">
                     <span>
@@ -59,39 +64,52 @@
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Email verified at</th>
+                            <th>Phone</th>
+                            <th>Image</th>
                             <th>Registration date</th>
-                            <th>Deactivate Patient</th>
-                            <th>Actions</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
 
-{{--                        @foreach($users as $user)--}}
+                        @foreach($doctors as $doctor)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$doctor->user->name}}</td>
+                                <td>{{$doctor->user->email}}</td>
+                                <td>{{$doctor->specialization}}</td>
                                 <td>
-
+                                    <img src="{{asset('/storage/Doctor/'.$doctor->doc_image)}}" width="200" height="200">
+                                <td>{{$doctor->user->created_at}}</td>
+                                <td>
+                                    <a href="/admin/doctor/{{$doctor->id}}/edit"><button class="btn btn-secondary" type="button"><i class="fa fa-edit"></i> Edit
+                                        </button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <a href=""><i class="fa fa-eye"></i> </a>
-                                    <a href=""><i class="fa fa-edit"></i> </a>
-                                    <a href=""><i class="fa fa-trash"></i> </a>
+                                    <button class="btn btn-danger" data-id="{{ $doctor->id }}" type="button" onclick="event.preventDefault();
+                                        document.getElementById('delete-form-{{ $doctor->id }}').submit();">
+                                        <i class="fa fa-trash">
+                                            Delete
+                                        </i>
+                                    </button>
+                                    <form id="delete-form1-{{ $doctor->id }}" id="{{ $doctor->id }}" action="/admin/dashboard/{{ $doctor->id }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 </td>
                             </tr>
-{{--                        @endforeach--}}
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Email verified at</th>
+                            <th>Phone</th>
+                            <th>Image</th>
                             <th>Registration date</th>
-                            <th>Deactivate Patient</th>
-                            <th>Actions</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         </tfoot>
                     </table>

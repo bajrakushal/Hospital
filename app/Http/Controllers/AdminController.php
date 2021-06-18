@@ -47,7 +47,7 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
-        //
+
     }
 
     /**
@@ -79,9 +79,11 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
-        //
+        $patient = User::findOrFail($id);
+        $patient->delete();
+        return redirect('/admin/patient')->with('success','Patient deleted successfully');
     }
 
     public function admin()
@@ -93,5 +95,9 @@ class AdminController extends Controller
     {
         $users=User::all()->where('role','=','patient');
         return view('Admin.Patient.index',compact('users'));
+    }
+    public function doctor()
+    {
+        return view('Doctor.dashboard');
     }
 }

@@ -16,6 +16,11 @@
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
         <div class="auth-box bg-dark border-top border-secondary">
             <div id="loginform">
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <form enctype="multipart/form-data" method="post" action="{{ route('login') }}">
                     @csrf
                     <div class="row p-b-30">
