@@ -42,6 +42,18 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = request()->validate([
+            'doc_image' => 'required|mimes:png,jpg,jpeg',
+            'specialization' => 'required',
+            'qualification' => 'required',
+            'service_charge' => 'required',
+            'name' => 'required',
+            'email'=> 'required|unique:users',
+            'phone' => 'required',
+            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6',
+        ]);
+
         $date=Carbon::now();
         $doc_details = new User();
         $doc_details->name = $request->input('name');
@@ -100,6 +112,17 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
+        $validate = request()->validate([
+            'doc_image' => 'mimes:png,jpg,jpeg',
+            'specialization' => 'required',
+            'qualification' => 'required',
+            'service_charge' => 'required',
+            'name' => 'required',
+            'email'=> 'required|unique:users,email,'.$doctor->user->id,
+            'phone' => 'required',
+            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6',
+        ]);
         if($request->has('doc_image'))
         {
             Storage::delete($doctor->doc_image);
@@ -123,7 +146,6 @@ class DoctorController extends Controller
         $profile->update();
         return redirect('/admin/doctor')->with('status', 'Data inserted!');
 
-
     }
 
     /**
@@ -134,9 +156,6 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        dd("a");
-        $doc = Doctor::findorfail($doctor->id);
-        $doc->delete();
         DB::table('users')->where('user_id',$doctor->id)->delete();
         return redirect('/admin/doctor')->with('success','Delete Successfully');
     }

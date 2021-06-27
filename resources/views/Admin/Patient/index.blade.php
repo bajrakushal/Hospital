@@ -22,6 +22,24 @@
                         <span class="hide-menu">Doctor </span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/appointment" aria-expanded="false">
+                        <i class="fa fa-list"></i>
+                        <span class="hide-menu">Apponitment</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/prescription" aria-expanded="false">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span class="hide-menu">Prescription</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
+                        <i class="fas fa-tablets"></i>
+                        <span class="hide-menu">Medicine</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -81,9 +99,37 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="/admin/patient/{{$user->id}}"><button class="btn btn-outline-primary" type="button"><i class="fa fa-eye"></i> View
+                                   <button class="btn btn-outline-primary" data-toggle="modal" data-id="{{ $user->id }}" data-target="#logoutModal2{{$user->id}}" type="button"><i class="fa fa-eye"></i> View
                                         </button>
-                                    </a>
+                                        <div class="modal fade" id="logoutModal2{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                    
+                                                  <h5 class="modal-title" id="exampleModalLabel">{{ $user->name }}</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                 <table>
+                                                     <tr>
+                                                         <th>Email:</th>
+                                                         <td>{{ $user->email }}</td>
+                                                     </tr>
+                                                     <tr>
+                                                        <th>Email Verified at:</th>
+                                                        <td>{{ $user->email_verified_at }}</td>
+                                                    </tr>
+                                                 </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    
                                 </td>
                                 <td>
                                     <a href="/admin/patient/{{$user->id}}/edit"><button class="btn btn-secondary" type="button"><i class="fa fa-edit"></i> Edit

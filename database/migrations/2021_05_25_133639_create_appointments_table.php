@@ -15,6 +15,7 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
+            $table->string('appointment_code');
             $table->string('name');
             $table->string('email');
             $table->date('date');
@@ -23,7 +24,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('message');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('doctor_id');
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Pending');
             $table->date('scheduled_for')->nullable();
             $table->timestamps();
         });

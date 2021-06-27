@@ -22,6 +22,24 @@
                         <span class="hide-menu">Doctor </span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/appointment" aria-expanded="false">
+                        <i class="fa fa-list"></i>
+                        <span class="hide-menu">Apponitment</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/prescription" aria-expanded="false">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span class="hide-menu">Prescription</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
+                        <i class="fas fa-tablets"></i>
+                        <span class="hide-menu">Medicine</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -67,6 +85,7 @@
                             <th>Phone</th>
                             <th>Image</th>
                             <th>Registration date</th>
+                            <th>View</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -81,6 +100,46 @@
                                 <td>
                                     <img src="{{asset('/storage/Doctor/'.$doctor->doc_image)}}" width="200" height="200">
                                 <td>{{$doctor->user->created_at}}</td>
+                                <td>
+                                    <button class="btn btn-outline-primary" data-toggle="modal" data-id="{{ $doctor->id }}" data-target="#logoutModal2{{$doctor->id}}" type="button"><i class="fa fa-eye"></i> View
+                                    </button>
+                                    <div class="modal fade" id="logoutModal2{{$doctor->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                                
+                                              <h5 class="modal-title" id="exampleModalLabel">{{ $doctor->user->name}}</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                             <table>
+                                                 <tr>
+                                                     <th>Email:</th>
+                                                     <td>{{ $doctor->user->email }}</td>
+                                                 </tr>
+                                                 <tr>
+                                                    <th>Specialization:</th>
+                                                    <td>{{ $doctor->specialization }}</td>
+                                                 </tr>
+                                                 <tr>
+                                                    <th>Qualification:</th>
+                                                    <td>{{ $doctor->qualification }}</td>
+                                                 </tr>
+                                                 <tr>
+                                                    <th>Service Charge:</th>
+                                                    <td>{{ $doctor->service_charge }}</td>
+                                                 </tr>
+                                             </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>
                                     <a href="/admin/doctor/{{$doctor->id}}/edit"><button class="btn btn-secondary" type="button"><i class="fa fa-edit"></i> Edit
                                         </button>
@@ -108,6 +167,7 @@
                             <th>Phone</th>
                             <th>Image</th>
                             <th>Registration date</th>
+                            <th>View</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>

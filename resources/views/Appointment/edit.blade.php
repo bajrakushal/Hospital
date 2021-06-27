@@ -23,6 +23,12 @@
                         <span class="hide-menu">Appointments </span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/prescription" aria-expanded="false">
+                        <i class="fa fa-list-ol"></i>
+                        <span class="hide-menu">Prescription </span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -82,7 +88,7 @@
                             <select name="status" class="form-control">
                                 <option value="null">---------</option>
                                 <option value="Confirmed">Confirmed</option>
-                                <option value="Confirmed">Pending</option>
+                                <option value="Pending">Pending</option>
                                 <option value="Cancelled">Cancelled</option>
                             </select>
                         </div>
@@ -99,7 +105,6 @@
                             <textarea type="text" class="form-control" name="message"  placeholder="Message">{{$appointments->message}} </textarea>
                         </div>
                     </div>
-
                 </div>
                 <div class="border-top">
                     <div class="card-body">

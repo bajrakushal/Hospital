@@ -47,7 +47,7 @@
 @section('breadcrumb')
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Edit Patient</h4>
+            <h4 class="page-title">Add Medicine</h4>
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -59,57 +59,78 @@
     </div>
 @endsection
 @section('content')
-    <div class="col-lg-2">
-
-    </div>
+<div class="col-lg-2">
+</div>
     <div class="col-md-8">
         <div class="card">
-            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/patient/{{$user->id}}">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/medicine">
                 @csrf
-                @method('PATCH')
                 <div class="card-body">
-                    <h4 class="card-title">Edit Patient Info</h4>
+                    <h4 class="card-title">Medicine details</h4>
                     <div class="form-group row">
-                        <label for="Name" class="col-sm-3 text-right control-label col-form-label">Full Name</label>
+                        <label for="Name" class="col-sm-3 text-right control-label col-form-label">Medicine Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Full name" name="name" value="{{old('name')??$user->name}}">
+                            <input type="text" class="form-control" placeholder="Medicine name" name="name">
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="email" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                        <label for="manufactured_by" class="col-sm-3 text-right control-label col-form-label">Manufactured By</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{old('email')??$user->email}}">
+                            <input type="text" class="form-control" placeholder="Manufactured By" name="manufactured_by">
+                            @error('manufactured_by')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="phone" class="col-sm-3 text-right control-label col-form-label">Phone</label>
+                        <label for="price" class="col-sm-3 text-right control-label col-form-label">Medicine Price</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number Here" value="{{old('phone')??$user->phone}}">
+                            <input type="number" class="form-control" name="price" id="price" placeholder="price">
+                            @error('price')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="age" class="col-sm-3 text-right control-label col-form-label">Password</label>
+                        <label for="manufacture_date" class="col-sm-3 text-right control-label col-form-label">Manufacture Date</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" placeholder="Password" name="password">
+                            <input type="date" class="form-control" placeholder=">Manufacture Date" name="manufacture_date">
+                            @error('manufacture_date')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label>
+                        <label for="manufacture_date" class="col-sm-3 text-right control-label col-form-label">	Expire Date</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" placeholder="Retype password" name="password_confirmation">
+                            <input type="date" class="form-control" placeholder="Expire Date" name="expire_date">
+                            @error('expire_date')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Ban User</label>
+                        <label for="description" class="col-sm-3 text-right control-label col-form-label">Description</label>
                         <div class="col-sm-9">
-                            <select name="status" class="form-control">
-                                <option value="null"></option>
-                                <option value="0">Not Banned</option>
-                                <option value="1">Banned</option>
-                            </select>
+                            <textarea id="ckeditor" name="description" class="ckeditor" rows="10">
+                                @error('description')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </textarea>
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        <label for="doctor image" class="col-sm-3 text-right control-label col-form-label">Upload Image</label>
+                        <div class="col-sm-9">
+                            <input type="file"  class="form-control" name="image" id="image">
+                            @error('image')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
                 <div class="border-top">
                     <div class="card-body">
@@ -124,4 +145,3 @@
 
     </div>
 @endsection
-

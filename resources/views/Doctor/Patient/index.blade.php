@@ -22,6 +22,12 @@
                         <span class="hide-menu">Appointments </span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/prescription" aria-expanded="false">
+                        <i class="fa fa-list-ol"></i>
+                        <span class="hide-menu">Prescription </span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -70,7 +76,35 @@
                                 <td>{{$user->email_verified_at}}</td>
                                 <td>{{$user->created_at}}</td>
                                 <td>
-                                    <a href=""><i class="fa fa-eye"></i> </a>
+                                    <a href="" data-toggle="modal" data-id="{{ $user->id }}" data-target="#logoutModal2{{$user->id}}" ><i class="fa fa-eye"></i> </a>
+                                    <div class="modal fade" id="logoutModal2{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                                
+                                              <h5 class="modal-title" id="exampleModalLabel">{{ $user->name }}</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                             <table>
+                                                 <tr>
+                                                     <th>Email:</th>
+                                                     <td>{{ $user->email }}</td>
+                                                 </tr>
+                                                 <tr>
+                                                    <th>Email Verified at:</th>
+                                                    <td>{{ $user->email_verified_at }}</td>
+                                                </tr>
+                                             </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
                                     <a href=""><i class="fa fa-edit"></i> </a>
                                     <a href="/admin/patient/delete/{{ $user->id }}"><i class="fa fa-trash"></i> </a>
                                 </td>

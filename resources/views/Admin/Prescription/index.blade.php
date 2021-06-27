@@ -1,37 +1,48 @@
 @extends('layouts.master')
 @section('sidebar')
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav" class="p-t-30">
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/doctor/dashboard" aria-expanded="false">
-                        <i class="mdi mdi-view-dashboard"></i>
-                        <span class="hide-menu">Dashboard</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/patient" aria-expanded="false">
-                        <i class="fa fa-procedures"></i>
-                        <span class="hide-menu">Patient </span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/appointment" aria-expanded="false">
-                        <i class="fa fa-list"></i>
-                        <span class="hide-menu">Appointments </span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/prescription" aria-expanded="false">
-                        <i class="fa fa-list-ol"></i>
-                        <span class="hide-menu">Prescription </span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+<div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+        <ul id="sidebarnav" class="p-t-30">
+            <li class="sidebar-item">
+                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/dashboard" aria-expanded="false">
+                    <i class="mdi mdi-view-dashboard"></i>
+                    <span class="hide-menu">Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link waves-effect waves-dark" href="/admin/patient" aria-expanded="false">
+                    <i class="fa fa-procedures"></i>
+                    <span class="hide-menu">Patient </span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link waves-effect waves-dark" href="/admin/doctor" aria-expanded="false">
+                    <i class="fa fa-user-md"></i>
+                    <span class="hide-menu">Doctor </span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link waves-effect waves-dark" href="/admin/appointment" aria-expanded="false">
+                    <i class="fa fa-list"></i>
+                    <span class="hide-menu">Apponitment</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link waves-effect waves-dark" href="/admin/prescription" aria-expanded="false">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                    <span class="hide-menu">Prescription</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
+                    <i class="fas fa-tablets"></i>
+                    <span class="hide-menu">Medicine</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
 @endsection
 @section('breadcrumb')
     <div class="row">
@@ -50,11 +61,6 @@
 @section('content')
     <div class="col-lg-12">
         <div class="card">
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
             <div class="card-body">
                 <h5 class="card-title">View Prescription Details</h5>
                 <div class="table-responsive">
@@ -69,9 +75,6 @@
                             <th>Appointment Reg_date</th>
                             <th>Status</th>
                             <th>View</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -82,11 +85,11 @@
                                 <td>{{$prescription->email}}</td>
                                 <td>{{$prescription->phone}}</td>
                                 @if($prescription->appointment == null)
-                                    <td></td>
+                                <td>No Prescription Available</td>
                                 @else
-                                    <td>{{$prescription->appointment->doctor->user->name}}</td>
+                                <td>{{$prescription->appointment->doctor->user->name}}</td>
                                 @endif
-                     
+                                
                                 <td>{{$prescription->created_at}}</td>
                                 <td>
                                     @if($prescription->status == 'Pending')
@@ -133,8 +136,7 @@
                                                 <tr>
                                                     <th>Symptoms</th>
                                                     <td>
-                                                       {{ strip_tags($prescription->symptoms)}}                                                    
-                                                    </td>
+                                                       {{ strip_tags($prescription->symptoms)}}                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>Description</th>
@@ -145,26 +147,26 @@
                                                 <tr>
                                                     <th>Doctor Incharge</th>
                                                     @if($prescription->appointment == null)
-                                                        <td></td>
+                                                        <td>No Prescription Available</td>
                                                     @else
                                                         <td>{{$prescription->appointment->doctor->user->name}}</td>
                                                     @endif
                                                 </tr>
                                                 <tr>
                                                     <th>Diagnosis</th>
-                                                    <td>{{ strip_tags($prescription->diagnosis)}}</td>
+                                                    <td>{{ $prescription->diagnosis}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Doctor Description</th>
-                                                    <td>{{ strip_tags($prescription->Doctor_desc)}}</td>
+                                                    <td>{{ $prescription->Doctor_desc}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Previous Medicine Name</th>
-                                                    <td>{{ strip_tags($prescription->prev_medicine_name)}}</td>
+                                                    <td>{{ $prescription->prev_medicine_name}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>New Medicine Name</th>
-                                                    <td>{{ strip_tags($prescription->new_medicine_name)}}</td>
+                                                    <td>{{ $prescription->new_medicine_name}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Total Amount</th>
@@ -178,25 +180,9 @@
                                           </div>
                                         </div>
                                     </div>
+                                    
                                 </td>
-                                <td>
-                                    <a href="/doctor/prescription/{{$prescription->id}}/edit"><button class="btn btn-cyan" type="button"><i class="fa fa-edit"></i> Edit
-                                        </button>
-                                    </a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger" data-id="{{ $prescription->id }}" type="button" onclick="event.preventDefault();
-                                        document.getElementById('delete-form-{{ $prescription->id }}').submit();">
-                                        <i class="fa fa-trash">
-                                            Delete
-                                        </i>
-                                    </button>
-                                    <form id="delete-form-{{ $prescription->id }}" id="{{ $prescription->id }}" action="/doctor/prescription/{{ $prescription->id }}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </td>
-                                </td>
+                                
                             </tr>
                         @endforeach
                         </tbody>
@@ -210,8 +196,6 @@
                             <th>Appointment Reg_date</th>
                             <th>Status</th>
                             <th>View</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
                         </tr>
                         </tfoot>
                     </table>

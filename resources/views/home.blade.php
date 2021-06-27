@@ -11,34 +11,34 @@
                     </a>
                 </li>
 
-                @if (isset($appointment))
-                    <ul>
-                        @if ($appointment->status == 'pending')
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                                    <i class="mdi mdi-account-alert"></i>
-                                    <span class="hide-menu">Please confirm your appointment</span>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
-                @elseif (isset($appointment) != null)
-                    @if($appointment->status == 'pending')
+{{--                @if (isset($appointment))--}}
+{{--                    <ul>--}}
+{{--                        @if ($appointment->status == 'Pending')--}}
+{{--                            <li class="sidebar-item">--}}
+{{--                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">--}}
+{{--                                    <i class="mdi mdi-account-alert"></i>--}}
+{{--                                    <span class="hide-menu">Please confirm your appointment</span>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endif--}}
+{{--                    </ul>--}}
+                @if (isset($appointment) != null)
+                    @if($appointment->status == 'Pending')
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
                                 <i class="mdi mdi-account-alert"></i>
                                 <span class="hide-menu">Please confirm your appointment</span>
                             </a>
                         </li>
-                    @elseif($appointment->status == 'confirmed')
+                    @elseif($appointment->status == 'Confirmed')
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/patient/prescription" aria-expanded="false">
                                     <i class="mdi mdi-view-list"></i>
-                                    <span class="hide-menu">Upload Prescription</span>
+                                    <span class="hide-menu">Prescription</span>
                                 </a>
                             </li>
                     @endif
-                    @endif
+                @endif
             </ul>
         </nav>
     </div>
@@ -67,11 +67,13 @@
                     <table id="data-table" class="table table-striped table-bordered">
                         <thead>
                         <tr>
+                            <th>Appointment Code</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Assigned Doctor</th>
                             <th>Appointment Reg_date</th>
+                            <th>Scheduled Data</th>
                             <th>Status</th>
                             <th>View</th>
                             <th>Delete</th>
@@ -82,28 +84,34 @@
 
                         @foreach($appointments  as $appointment)
                             <tr>
+                                <td>{{$appointment->appointment_code}}</td>
                                 <td>{{$appointment->name}}</td>
                                 <td>{{$appointment->email}}</td>
                                 <td>{{$appointment->phone}}</td>
                                 <td>{{$appointment->doctor->user->name}}</td>
                                 <td>{{$appointment->created_at}}</td>
+                                @if($appointment->scheduled_for == NULL)
+                                <td>pending</td>
+                                @else
+                                <td>{{ $appointment->scheduled_for }}</td>
+                                @endif
                                 <td>
-                                    @if($appointment->status == 'pending')
+                                    @if($appointment->status == 'Pending')
                                         <button type="button" class="btn btn-primary">
                                             Pending
                                         </button>
-                                    @elseif($appointment->status == 'confirmed')
-                                        <button type="button" class="btn btn-secondary">
+                                    @elseif($appointment->status == 'Confirmed')
+                                        <button type="button" class="btn btn-success">
                                             Confirmed
                                         </button>
-                                    @elseif($appointment->status == 'cancelled')
+                                    @elseif($appointment->status == 'Cancelled')
                                         <button type="button" class="btn btn-danger">
                                             Cancelled
                                         </button>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="/doctor/appointment/{{$appointment->id}}/edit"><button class="btn btn-secondary" type="button"><i class="fa fa-eye"></i> View
+                                    <a href=""><button class="btn btn-secondary" type="button"><i class="fa fa-eye"></i> View
                                         </button>
                                     </a>
                                 </td>
@@ -124,16 +132,19 @@
                         @endforeach
                         </tbody>
                         <tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Assigned Doctor</th>
-                            <th>Appointment Reg_date</th>
-                            <th>Status</th>
-                            <th>View</th>
-                            <th>Delete</th>
-                        </tr>
+                            <tr>
+                                <th>Appointment Code</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Assigned Doctor</th>
+                                <th>Appointment Reg_date</th>
+                                <th>Scheduled Data</th>
+                                <th>Status</th>
+                                <th>View</th>
+                                <th>Delete</th>
+    
+                            </tr>
                         </tfoot>
                     </table>
                 </div>

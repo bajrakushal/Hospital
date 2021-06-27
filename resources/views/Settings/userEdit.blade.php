@@ -5,41 +5,28 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav" class="p-t-30">
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/dashboard" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/home" aria-expanded="false">
                         <i class="mdi mdi-view-dashboard"></i>
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/admin/patient" aria-expanded="false">
-                        <i class="fa fa-procedures"></i>
-                        <span class="hide-menu">Patient </span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/admin/doctor" aria-expanded="false">
-                        <i class="fa fa-user-md"></i>
-                        <span class="hide-menu">Doctor </span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/admin/appointment" aria-expanded="false">
-                        <i class="fa fa-list"></i>
-                        <span class="hide-menu">Apponitment</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/admin/prescription" aria-expanded="false">
-                        <i class="fas fa-prescription-bottle-alt"></i>
-                        <span class="hide-menu">Prescription</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
-                        <i class="fas fa-tablets"></i>
-                        <span class="hide-menu">Medicine</span>
-                    </a>
-                </li>
+                @if (isset($appointment) != null)
+                    @if($appointment->status == 'Pending')
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                                <i class="mdi mdi-account-alert"></i>
+                                <span class="hide-menu">Please confirm your appointment</span>
+                            </a>
+                        </li>
+                    @elseif($appointment->status == 'Confirmed')
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/patient/prescription" aria-expanded="false">
+                                    <i class="mdi mdi-view-list"></i>
+                                    <span class="hide-menu">Prescription</span>
+                                </a>
+                            </li>
+                    @endif
+                @endif
             </ul>
         </nav>
     </div>
@@ -47,7 +34,7 @@
 @section('breadcrumb')
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Edit Patient</h4>
+            <h4 class="page-title">Dashboard</h4>
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -59,57 +46,60 @@
     </div>
 @endsection
 @section('content')
-    <div class="col-lg-2">
-
-    </div>
+<div class="col-lg-2">
+</div>
     <div class="col-md-8">
         <div class="card">
-            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/patient/{{$user->id}}">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/profile/user/{{ $users->id }}">
                 @csrf
-                @method('PATCH')
+                @method('PUT')
                 <div class="card-body">
-                    <h4 class="card-title">Edit Patient Info</h4>
+                    <h4 class="card-title">User Info</h4>
                     <div class="form-group row">
                         <label for="Name" class="col-sm-3 text-right control-label col-form-label">Full Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Full name" name="name" value="{{old('name')??$user->name}}">
+                            <input type="text" class="form-control" placeholder="Full name" name="name" value="{{ $users->name }}">
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="email" class="col-sm-3 text-right control-label col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{old('email')??$user->email}}">
+                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ $users->email }}">
+                            @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="phone" class="col-sm-3 text-right control-label col-form-label">Phone</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number Here" value="{{old('phone')??$user->phone}}">
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number Here" value= {{ $users->phone }}>
+                            @error('phone')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="age" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" placeholder="Password" name="password">
+                            @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" placeholder="Retype password" name="password_confirmation">
+                            @error('password_confirmation')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Ban User</label>
-                        <div class="col-sm-9">
-                            <select name="status" class="form-control">
-                                <option value="null"></option>
-                                <option value="0">Not Banned</option>
-                                <option value="1">Banned</option>
-                            </select>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="border-top">
                     <div class="card-body">
@@ -121,7 +111,5 @@
         </div>
     </div>
     <div class="col-lg-2">
-
     </div>
 @endsection
-

@@ -5,28 +5,39 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav" class="p-t-30">
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/doctor/dashboard" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/dashboard" aria-expanded="false">
                         <i class="mdi mdi-view-dashboard"></i>
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/patient" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/patient" aria-expanded="false">
                         <i class="fa fa-procedures"></i>
                         <span class="hide-menu">Patient </span>
                     </a>
                 </li>
-
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/appointment" aria-expanded="false">
-                        <i class="fa fa-list"></i>
-                        <span class="hide-menu">Appointments </span>
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/doctor" aria-expanded="false">
+                        <i class="fa fa-user-md"></i>
+                        <span class="hide-menu">Doctor </span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/doctor/prescription" aria-expanded="false">
-                        <i class="fa fa-list-ol"></i>
-                        <span class="hide-menu">Prescription </span>
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/appointment" aria-expanded="false">
+                        <i class="fa fa-list"></i>
+                        <span class="hide-menu">Apponitment</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/prescription" aria-expanded="false">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span class="hide-menu">Prescription</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
+                        <i class="fas fa-tablets"></i>
+                        <span class="hide-menu">Medicine</span>
                     </a>
                 </li>
             </ul>
@@ -50,59 +61,47 @@
 @section('content')
     <div class="col-lg-12">
         <div class="card">
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
             <div class="card-body">
                 <h5 class="card-title">View Appointment Details</h5>
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table id="data-table" class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>Assigned Doctor</th>
-                            <th>Appointment Reg_date</th>
-                            <th>Scheduled For</th>
+                            <th>Phone Number</th>
+                            <th>Date</th>
+                            <th>Doctor Name</th>
+                            <th>Doctor Specialization</th>
+                            <th>Message</th>
+                            <th>Schedule For</th>
                             <th>Status</th>
                             <th>View</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
 
                         </tr>
                         </thead>
                         <tbody>
 
-                        @forelse($appointments  as $appointment)
+                        @foreach($appointments as $appointment)
                             <tr>
-                                <td>{{$appointment->name}}</td>
-                                <td>{{$appointment->email}}</td>
-                                <td>{{$appointment->phone}}</td>
-                                <td>{{$appointment->doctor->user->name}}</td>
-                                <td>{{$appointment->created_at}}</td>
+                                <td>{{ $appointment->name }}</td>
+                                <td>{{ $appointment->email }}</td>
+                                <td>{{ $appointment->phone }}</td>
+                                <td>{{ $appointment->date}}</td>
+                                <td>{{ $appointment->doctor->user->name }}</td>
+                                <td>{{ $appointment->doctor->specialization}}</td>
+                                <td>{{ $appointment->message }}</td>
                                 @if($appointment->scheduled_for == NULL)
                                 <td>pending</td>
                                 @else
                                 <td> {{ $appointment->scheduled_for }}</td>
                                 @endif
-                                <td>
-                                    @if($appointment->status == 'Pending')
-                                        <button type="button" class="btn btn-primary">
-                                            Pending
-                                        </button>
-                                            @elseif($appointment->status == 'Confirmed')
-                                        <button type="button" class="btn btn-success">
-                                            Confirmed
-                                        </button>
-                                            @elseif($appointment->status == 'Cancelled')
-                                        <button type="button" class="btn btn-danger">
-                                            Cancelled
-                                        </button>
-                                    @endif
-                                </td>
+                                <td>{{ $appointment->status }}</td>
                                 <td>
                                     <button class="btn btn-outline-primary" data-toggle="modal" data-id="{{ $appointment->id }}" data-target="#logoutModal2{{$appointment->id}}" type="button"><i class="fa fa-eye"></i> View
                                     </button>
@@ -151,42 +150,21 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
-                                    <a href="/doctor/appointment/{{$appointment->id}}/edit"><button class="btn btn-cyan" type="button"><i class="fa fa-edit"></i> Edit
-                                        </button>
-                                    </a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger" data-id="{{ $appointment->id }}" type="button" onclick="event.preventDefault();
-                                        document.getElementById('delete-form-{{ $appointment->id }}').submit();">
-                                        <i class="fa fa-trash">
-                                            Delete
-                                        </i>
-                                    </button>
-                                    <form id="delete-form-{{ $appointment->id }}" id="{{ $appointment->id }}" action="/doctor/appointment/{{ $appointment->id }}/delete" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('POST')
-                                    </form>
-                                </td>
-                                </td>
                             </tr>
-                            @empty
-                            <p>No  data</p>
-                         @endforelse
+                        @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Phone</th>
-                                <th>Assigned Doctor</th>
-                                <th>Appointment Reg_date</th>
-                                <th>Scheduled For</th>
+                                <th>Phone Number</th>
+                                <th>Date</th>
+                                <th>Doctor Name</th>
+                                <th>Doctor Specialization</th>
+                                <th>Message</th>
+                                <th>Schedule For</th>
                                 <th>Status</th>
                                 <th>View</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-    
                             </tr>
                         </tfoot>
                     </table>

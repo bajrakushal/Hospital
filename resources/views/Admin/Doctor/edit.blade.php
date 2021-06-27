@@ -22,6 +22,24 @@
                         <span class="hide-menu">Doctor </span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/appointment" aria-expanded="false">
+                        <i class="fa fa-list"></i>
+                        <span class="hide-menu">Apponitment</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/prescription" aria-expanded="false">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span class="hide-menu">Prescription</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
+                        <i class="fas fa-tablets"></i>
+                        <span class="hide-menu">Medicine</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -55,36 +73,54 @@
                         <label for="Name" class="col-sm-3 text-right control-label col-form-label">Full Name</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" placeholder="Full name" name="name" value="{{old('name')??$doctor->user->name}}">
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="email" class="col-sm-3 text-right control-label col-form-label">Email</label>
                         <div class="col-sm-9">
                             <input type="email" class="form-control" placeholder="Email" name="email" value="{{old('email')??$doctor->user->email}}">
+                            @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="phone" class="col-sm-3 text-right control-label col-form-label">Phone</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number Here" value="{{old('phone')??$doctor->user->phone}}">
+                            @error('phone')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="age" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" placeholder="Password" name="password">
+                            @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" placeholder="Retype password" name="password_confirmation">
+                            @error('password_confirmation')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row" id="row">
                         <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Specialist</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="specialization" id="specialization" placeholder="specialization" value="{{old('specialization')??$doctor->specialization}}">
+                            @error('specialization')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <input type="hidden" value="{{$doctor->user->id}}">
@@ -92,18 +128,27 @@
                         <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Qualification</label>
                         <div class="col-sm-9">
                             <input type="text"  class="form-control" name="qualification" id="qualification" placeholder="Qualification" value="{{old('qualification')??$doctor->qualification}}">
+                            @error('qualification')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Service Charge</label>
                         <div class="col-sm-9">
                             <input type="text"  class="form-control" name="service_charge" id="service_charge" placeholder="service_charge" value="{{old('service_charge')??$doctor->service_charge}}">
+                            @error('service_charge')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="doctor image" class="col-sm-3 text-right control-label col-form-label">Upload Image</label>
                         <div class="col-sm-9">
                             <input type="file"  class="form-control" name="doc_image" id="doc_image">
+                            @error('doc_image')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>

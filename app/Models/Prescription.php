@@ -5,22 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Appointment extends Model
+class Prescription extends Model
 {
     use HasFactory;
-
     protected $guarded=[];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function doctor()
+    public function appointment()
     {
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Appointment::class);
     }
-    public function prescriptions()
+    public function prescriptionmedicines()
     {
-        return $this->hasMany(Prescription::class);
+        return $this->hasMany(PrescriptionMedicine::class);
     }
 }

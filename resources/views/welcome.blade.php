@@ -72,7 +72,7 @@
                     </li>
                     @if (Route::has('register'))
                         <li>
-                            <a class="smoothScroll" href="">{{ __('Register') }}</a>
+                            <a class="smoothScroll" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
 

@@ -34,12 +34,6 @@
                         <span class="hide-menu">Prescription</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
-                        <i class="fas fa-tablets"></i>
-                        <span class="hide-menu">Medicine</span>
-                    </a>
-                </li>
             </ul>
         </nav>
     </div>
@@ -47,7 +41,7 @@
 @section('breadcrumb')
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Edit Patient</h4>
+            <h4 class="page-title">Doctor</h4>
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -59,57 +53,105 @@
     </div>
 @endsection
 @section('content')
-    <div class="col-lg-2">
-
-    </div>
+<div class="col-lg-2">
+</div>
     <div class="col-md-8">
         <div class="card">
-            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/admin/patient/{{$user->id}}">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="/profile/doctor/{{ $users->id }}">
                 @csrf
-                @method('PATCH')
+                @method('PUT')
                 <div class="card-body">
-                    <h4 class="card-title">Edit Patient Info</h4>
+                    <h4 class="card-title">Doctor Info</h4>
                     <div class="form-group row">
                         <label for="Name" class="col-sm-3 text-right control-label col-form-label">Full Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Full name" name="name" value="{{old('name')??$user->name}}">
+                            <input type="text" class="form-control" placeholder="Full name" name="name" value="{{ $users->user->name }}">
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                       
                     </div>
                     <div class="form-group row">
                         <label for="email" class="col-sm-3 text-right control-label col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{old('email')??$user->email}}">
+                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ $users->user->email }}">
+                            @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                     
                     </div>
                     <div class="form-group row">
                         <label for="phone" class="col-sm-3 text-right control-label col-form-label">Phone</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number Here" value="{{old('phone')??$user->phone}}">
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number Here" value= {{ $users->user->phone }}>
+                            @error('phone')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                       
                     </div>
                     <div class="form-group row">
                         <label for="age" class="col-sm-3 text-right control-label col-form-label">Password</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" placeholder="Password" name="password">
+                            @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                       
                     </div>
                     <div class="form-group row">
                         <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Confirm Password</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" placeholder="Retype password" name="password_confirmation">
+                            @error('password_confirmation')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                      
+                    </div>
+                    <div class="form-group row" id="row">
+                        <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Specialist</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="specialization" id="speciality" placeholder="Specialist" value="{{ $users->specialization }}">
+                            @error('specialization')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                       
                     </div>
                     <div class="form-group row">
-                        <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Ban User</label>
+                        <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Qualification</label>
                         <div class="col-sm-9">
-                            <select name="status" class="form-control">
-                                <option value="null"></option>
-                                <option value="0">Not Banned</option>
-                                <option value="1">Banned</option>
-                            </select>
+                            <input type="text"  class="form-control" name="qualification" id="qualification" placeholder="Qualification" value="{{ $users->qualification }}">
+                            @error('qualification')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                      
                     </div>
-
+                    <div class="form-group row">
+                        <label for="lab number" class="col-sm-3 text-right control-label col-form-label">Service Charge</label>
+                        <div class="col-sm-9">
+                            <input type="text"  class="form-control" name="service_charge" id="service_charge" placeholder="service_charge" value="{{ $users->service_charge }}">
+                            @error('service_charge')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                    </div>
+                    <div class="form-group row">
+                        <label for="doctor image" class="col-sm-3 text-right control-label col-form-label">Upload Image</label>
+                        <div class="col-sm-9">
+                            <input type="file"  class="form-control" name="doc_image" id="doc_image">
+                            @error('doc_image')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                    </div>
                 </div>
                 <div class="border-top">
                     <div class="card-body">
@@ -124,4 +166,3 @@
 
     </div>
 @endsection
-

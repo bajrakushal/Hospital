@@ -22,6 +22,24 @@
                         <span class="hide-menu">Doctor </span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/appointment" aria-expanded="false">
+                        <i class="fa fa-list"></i>
+                        <span class="hide-menu">Apponitment</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/prescription" aria-expanded="false">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span class="hide-menu">Prescription</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/medicine" aria-expanded="false">
+                        <i class="fas fa-tablets"></i>
+                        <span class="hide-menu">Medicine</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

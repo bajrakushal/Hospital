@@ -13,12 +13,9 @@
     <link href="{{asset('admin_asset/assets/libs/flot/css/float-chart.css')}}" rel="stylesheet">
     <link href="{{asset('admin_asset/dist/css/style.min.css')}}" rel="stylesheet">
     <link href="{{asset('admin_asset/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <link rel="license" href="https://www.opensource.org/licenses/mit-license/">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-    <![endif]-->
+
 </head>
 
 <body>
@@ -70,7 +67,7 @@
                         <div class="dropdown-menu dropdown-menu-right user-dd animated">
                             <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i>Welcome {{auth()->user()->name}}</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                            <a class="dropdown-item" href="/profile/{{ auth()->user()->id }}"><i class="ti-settings m-r-5 m-l-5"></i> Profile</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                                 <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
@@ -79,7 +76,6 @@
                                 </form>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
                         </div>
                     </li>
                     <!-- ============================================================== -->
@@ -132,16 +128,67 @@
 <script src="{{asset('admin_asset/assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
 <script src="{{asset('admin_asset/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
 <script src="{{asset('admin_asset/dist/js/pages/chart/chart-page-init.js')}}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="{{asset('admin_asset/assets/extra-libs/multicheck/datatable-checkbox-init.js')}}"></script>
 <script src="{{asset('admin_asset/assets/extra-libs/multicheck/jquery.multicheck.js')}}"></script>
 <script src="{{asset('admin_asset/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
 
+<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $('.ckeditor').ckeditor();
+
+    });
+
+</script>
 
 <script type="text/javascript">
     $('#data-table').DataTable();
 </script>
+<script type="text/javascript">
+    $('.add').on('click',function (){
+        addSymptoms();
+    });
+    function addSymptoms() {
+        var tr= '<tr>'+
+            '<td>'+
+            '<input type="text" name="medicine[]" class="form-control" id="medicine" placeholder="Symptoms here"/>'+
+            '</td>'+
+            '<td>'+
+            '<input type="number" name="price[]" class="form-control" id="price" placeholder="Price here"/>'+
+            '</td>'+
+            '<td>'+
+            '<button type="button" class="btn btn-danger remove">Remove -</button> '+
+            '</td>'+
+            '</tr>';
+        $('tbody').append(tr);
+    }
+    $('tbody').on('click','.remove',function (){
+        
+        $(this).parent().parent().remove();
+    });
+
+    $(document).ready(function () {
+
+        $(".table").on('input', '#price', function () {
+            var calculated_total_sum = 0;
+
+            $(".table #price").each(function () {
+                var get_textbox_value = $(this).val();
+                if ($.isNumeric(get_textbox_value)) {
+                    calculated_total_sum += parseFloat(get_textbox_value);
+                }
+            });
+            let a = document.getElementById('total').value = calculated_total_sum;
+        });
+    });
+
+    //*
+</script>
+
 
 </body>
 </html>

@@ -28,17 +28,12 @@ class AppointmentController extends Controller
     }
     public function index()
     {
+        // $abc = Appointment::with('doctors')->where('doctor_id',Auth::user()->id)->get();
+        // dd($abc);
         $doctor = Doctor::where('user_id', \auth()->user()->id)->first();
         $appointments = $doctor->appointments()->get();
         return view('Appointment.index',compact('appointments'));
     }
-
-//    public function display()
-//    {
-//        $appointments=Appointment::where('user_id',\auth()->user()->id)->get();
-//        return view('home',compact('appointments'));
-//
-//    }
 
     /**
      * Show the form for creating a new resource.
@@ -58,7 +53,10 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        $code = substr($request->name, 0,5);
+        $rand = rand(10,100).$code;
         $app = new Appointment();
+        $app->appointment_code= $rand;
         $app->name = $request->input('name');
         $app->email = $request->input('email');
         $app->phone = $request->input('phone');
@@ -93,6 +91,7 @@ class AppointmentController extends Controller
 //        $appointments = Doctor::with('appointments')->where('user_id', $appointment->id)->first();
 
 //        $appointments = $doctor->appointments()->get();
+        
 
         $appointments = Appointment::where('id',$appointment->id)->first();
         return view('Appointment.edit',compact('appointments'));
@@ -117,9 +116,10 @@ class AppointmentController extends Controller
         if ($request->status == "Confirmed")
         {
             Mail::to($appointment->email)->send(new AppointmentMail($appointment));
+            $appointment->update();
         }
-        $appointment->update();
 
+        $appointment->update();
         return redirect('/doctor/appointment');
     }
 
@@ -129,12 +129,19 @@ class AppointmentController extends Controller
      * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Appointment $appointment)
+    public function destroy($id)
     {
-        //
+        $appointment = Appointment::findOrFail($id);
+        $appointment->delete();
+        $appointment->prescriptions()->delete();
+        return redirect('/doctor/appointment')->with('success','Deleted Successfully');
     }
     public function a($id)
     {
         dd($id);
+    }
+    public function appointShow(){
+        $appointments = Appointment::orderBy('created_at','desc')->get();
+        return view('Admin.Appointment.index',compact('appointments'));
     }
 }
